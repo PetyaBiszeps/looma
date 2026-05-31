@@ -39,21 +39,27 @@ function formatPrice(amount: number) {
 <template>
   <UiCard class="group h-full gap-0 overflow-hidden rounded-lg border-border bg-card p-0 text-card-foreground shadow-xs transition-colors hover:border-foreground">
     <div class="relative aspect-square overflow-hidden bg-muted">
-      <NuxtImg
-        v-if="primaryImage"
-        :src="primaryImage.src"
-        :alt="primaryImage.alt"
-        :width="primaryImage.width"
-        :height="primaryImage.height"
-        sizes="sm:50vw md:33vw lg:25vw"
-        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-      />
-      <div
-        v-else
-        class="flex h-full w-full items-center justify-center text-sm font-medium text-muted-foreground"
+      <NuxtLink
+        :to="`/products/${product.slug}`"
+        class="block h-full w-full"
+        :aria-label="`View ${product.name}`"
       >
-        No image
-      </div>
+        <NuxtImg
+          v-if="primaryImage"
+          :src="primaryImage.src"
+          :alt="primaryImage.alt"
+          :width="primaryImage.width"
+          :height="primaryImage.height"
+          sizes="sm:50vw md:33vw lg:25vw"
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+        />
+        <div
+          v-else
+          class="flex h-full w-full items-center justify-center text-sm font-medium text-muted-foreground"
+        >
+          No image
+        </div>
+      </NuxtLink>
 
       <div class="absolute left-4 top-4 flex items-center gap-2">
         <UiBadge
@@ -92,7 +98,12 @@ function formatPrice(amount: number) {
       </p>
 
       <h3 class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-card-foreground">
-        {{ product.name }}
+        <NuxtLink
+          :to="`/products/${product.slug}`"
+          class="transition-colors hover:text-foreground hover:underline"
+        >
+          {{ product.name }}
+        </NuxtLink>
       </h3>
 
       <div class="mt-auto flex items-end justify-between gap-3 pt-2">
