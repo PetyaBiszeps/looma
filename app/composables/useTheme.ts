@@ -8,9 +8,9 @@ export function useTheme() {
   // Methods
   function toggleTheme() {
     if (isDark.value) {
-      return colorMode.preference === 'dark'
+      return colorMode.preference = 'light'
     }
-    return colorMode.preference === 'light'
+    return colorMode.preference = 'dark'
   }
 
   return {

@@ -60,6 +60,7 @@ export default defineNuxtConfig({
     strategy: 'no_prefix'
   },
   icon: {
+    cssLayer: 'components',
     customCollections: [{
       dir: '~/app/assets/svgs',
       prefix: 'local'
