@@ -1,6 +1,9 @@
 <script setup lang="ts">
+const route = useRoute()
+const router = useRouter()
 const cartStore = useCartStore()
 const wishlistStore = useWishlistStore()
+const headerSearchQuery = ref('')
 
 const wishlistLabel = computed(() => {
   if (wishlistStore.itemCount === 0) {
@@ -17,6 +20,30 @@ const cartLabel = computed(() => {
 
   return `Cart, ${cartStore.itemCount} ${cartStore.itemCount === 1 ? 'item' : 'items'}`
 })
+
+function getQueryValue(value: unknown) {
+  return Array.isArray(value) ? value[0] ?? '' : typeof value === 'string' ? value : ''
+}
+
+function submitHeaderSearch() {
+  const search = headerSearchQuery.value.trim()
+  const query = route.path === '/catalog' ? { ...route.query } : {}
+
+  if (search) {
+    query.search = search
+  } else {
+    delete query.search
+  }
+
+  router.push({
+    path: '/catalog',
+    query
+  })
+}
+
+watch(() => route.query.search, (search) => {
+  headerSearchQuery.value = getQueryValue(search)
+}, { immediate: true })
 </script>
 
 <template>
@@ -49,14 +76,22 @@ const cartLabel = computed(() => {
       </div>
 
       <div class="flex flex-1 basis-full items-center justify-end gap-3 sm:basis-auto">
-        <label class="relative hidden w-full max-w-xs items-center sm:flex">
-          <span class="sr-only">Search products</span>
+        <form
+          class="relative hidden w-full max-w-xs items-center sm:flex"
+          role="search"
+          @submit.prevent="submitHeaderSearch"
+        >
+          <label
+            for="site-search"
+            class="sr-only"
+          >Search products</label>
           <Icon
             name="lucide:search"
             class="pointer-events-none absolute left-3 h-4 w-4 text-muted-foreground"
             aria-hidden="true"
           />
           <UiInput
+            v-model="headerSearchQuery"
             id="site-search"
             name="search"
             type="search"
@@ -64,7 +99,7 @@ const cartLabel = computed(() => {
             placeholder="Search sneakers, apparel"
             class="h-10 bg-card pl-9 pr-3 text-sm text-foreground hover:border-foreground/30 focus-visible:border-foreground focus-visible:ring-foreground/10"
           />
-        </label>
+        </form>
 
         <UiButton
           as-child

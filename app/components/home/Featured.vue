@@ -5,7 +5,27 @@ defineProps<{
   products: Product[]
 }>()
 
-const filterChips = ['All', 'Sneakers', 'Apparel', 'Accessories', 'Under $200']
+const filterLinks = [{
+  label: 'All',
+  to: '/catalog',
+  variant: 'default'
+}, {
+  label: 'Sneakers',
+  to: { path: '/catalog', query: { category: 'sneakers' } },
+  variant: 'outline'
+}, {
+  label: 'Apparel',
+  to: { path: '/catalog', query: { category: 'streetwear' } },
+  variant: 'outline'
+}, {
+  label: 'Accessories',
+  to: { path: '/catalog', query: { category: 'accessories' } },
+  variant: 'outline'
+}, {
+  label: 'Under $200',
+  to: { path: '/catalog', query: { sort: 'price-asc' } },
+  variant: 'outline'
+}] as const
 </script>
 
 <template>
@@ -29,27 +49,31 @@ const filterChips = ['All', 'Sneakers', 'Apparel', 'Accessories', 'Under $200']
     <div class="mb-7 flex min-h-16 flex-col gap-4 border-y border-border py-3 md:flex-row md:items-center md:justify-between">
       <div class="flex flex-wrap items-center gap-2.5">
         <UiBadge
-          v-for="chip in filterChips"
-          :key="chip"
-          :variant="chip === 'All' ? 'default' : 'outline'"
+          v-for="link in filterLinks"
+          :key="link.label"
+          as-child
+          :variant="link.variant"
           class="rounded-full px-3 py-1 text-xs font-semibold"
         >
-          {{ chip }}
+          <NuxtLink :to="link.to">
+            {{ link.label }}
+          </NuxtLink>
         </UiBadge>
       </div>
 
       <UiButton
-        type="button"
+        as-child
         variant="outline"
         class="w-fit bg-card"
-        aria-disabled="true"
       >
-        Sort: Newest
-        <Icon
-          name="lucide:chevron-down"
-          class="h-4 w-4"
-          aria-hidden="true"
-        />
+        <NuxtLink :to="{ path: '/catalog', query: { sort: 'newest' } }">
+          Sort: Newest
+          <Icon
+            name="lucide:chevron-down"
+            class="h-4 w-4"
+            aria-hidden="true"
+          />
+        </NuxtLink>
       </UiButton>
     </div>
 
