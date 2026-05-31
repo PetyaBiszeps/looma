@@ -28,8 +28,8 @@ function createWishlistProduct(item: WishlistItem): Product {
 </script>
 
 <template>
-  <section class="mx-auto w-full max-w-360 px-4 py-10 sm:px-6 lg:px-16">
-    <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+  <section class="mx-auto w-full max-w-screen-2xl px-6 py-10 lg:px-8 lg:py-14 xl:px-12">
+    <div class="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
       <div class="max-w-2xl space-y-3">
         <p class="text-sm font-medium tracking-[0.18em] text-muted-foreground uppercase">
           Saved Pieces
