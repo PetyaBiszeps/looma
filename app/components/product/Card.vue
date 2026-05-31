@@ -88,7 +88,7 @@ function formatPrice(amount: number) {
         variant="outline"
         size="icon-sm"
         class="absolute right-4 top-4 h-8 w-8 rounded-full border-border bg-card shadow-xs hover:bg-card hover:text-foreground"
-        :class="isWishlisted ? 'border-primary text-primary' : 'text-card-foreground'"
+        :class="isWishlisted ? 'border-destructive/40 text-destructive' : 'text-card-foreground'"
         :aria-label="wishlistLabel"
         :aria-pressed="isWishlisted"
         @click.stop="wishlistStore.toggleItem(product)"
@@ -96,7 +96,7 @@ function formatPrice(amount: number) {
         <Icon
           name="lucide:heart"
           class="h-4 w-4"
-          :class="{ 'fill-current': isWishlisted }"
+          :class="{ 'fill-destructive': isWishlisted }"
           aria-hidden="true"
         />
       </UiButton>
