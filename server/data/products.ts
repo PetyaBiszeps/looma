@@ -1,4 +1,4 @@
-import type { Product } from '../../app/types'
+import type { Product } from '~/types'
 
 export const mockProducts: Product[] = [{
   id: 'prod-aurora-runner-01',

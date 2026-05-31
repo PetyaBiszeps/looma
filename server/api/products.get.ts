@@ -1,5 +1,5 @@
-import type { Product } from '../../app/types'
 import { mockProducts } from '../data/products'
+import type { Product } from '~/types'
 
 interface ProductsResponse {
   items: Product[]
