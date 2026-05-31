@@ -1,5 +1,14 @@
 <script setup lang="ts">
 const cartStore = useCartStore()
+const wishlistStore = useWishlistStore()
+
+const wishlistLabel = computed(() => {
+  if (wishlistStore.itemCount === 0) {
+    return 'Wishlist'
+  }
+
+  return `Wishlist, ${wishlistStore.itemCount} saved ${wishlistStore.itemCount === 1 ? 'item' : 'items'}`
+})
 
 const cartLabel = computed(() => {
   if (cartStore.itemCount === 0) {
@@ -61,17 +70,24 @@ const cartLabel = computed(() => {
           as-child
           variant="outline"
           size="icon-lg"
-          class="h-10 w-10 bg-card text-muted-foreground hover:bg-card hover:text-foreground"
+          class="relative h-10 w-10 bg-card text-muted-foreground hover:bg-card hover:text-foreground"
         >
           <NuxtLink
             to="/wishlist"
-            aria-label="Wishlist"
+            :aria-label="wishlistLabel"
           >
             <Icon
               name="lucide:heart"
               class="h-4 w-4"
               aria-hidden="true"
             />
+            <span
+              v-if="wishlistStore.itemCount > 0"
+              class="absolute -right-1 -top-1 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[11px] font-bold leading-none text-primary-foreground shadow-xs tabular-nums"
+              aria-hidden="true"
+            >
+              {{ wishlistStore.itemCount }}
+            </span>
           </NuxtLink>
         </UiButton>
 

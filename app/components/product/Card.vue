@@ -5,6 +5,8 @@ const props = defineProps<{
   product: Product
 }>()
 
+const wishlistStore = useWishlistStore()
+
 const primaryImage = computed(() => {
   return props.product.images.find(image => image.isPrimary) ?? props.product.images[0]
 })
@@ -17,6 +19,10 @@ const hasOriginalPrice = computed(() => {
 
 const isOnSale = computed(() => props.product.saleState === 'sale' || hasOriginalPrice.value)
 const isSoldOut = computed(() => props.product.saleState === 'sold-out')
+const isWishlisted = computed(() => wishlistStore.isWishlisted(props.product.id))
+const wishlistLabel = computed(() => {
+  return isWishlisted.value ? `Remove ${props.product.name} from wishlist` : `Save ${props.product.name} to wishlist`
+})
 
 const price = computed(() => formatPrice(props.product.price.amount))
 const originalPrice = computed(() => {
@@ -81,12 +87,16 @@ function formatPrice(amount: number) {
         type="button"
         variant="outline"
         size="icon-sm"
-        class="absolute right-4 top-4 h-8 w-8 rounded-full border-border bg-card text-card-foreground shadow-xs hover:bg-card hover:text-foreground"
-        :aria-label="`Save ${product.name} to wishlist`"
+        class="absolute right-4 top-4 h-8 w-8 rounded-full border-border bg-card shadow-xs hover:bg-card hover:text-foreground"
+        :class="isWishlisted ? 'border-primary text-primary' : 'text-card-foreground'"
+        :aria-label="wishlistLabel"
+        :aria-pressed="isWishlisted"
+        @click.stop="wishlistStore.toggleItem(product)"
       >
         <Icon
           name="lucide:heart"
           class="h-4 w-4"
+          :class="{ 'fill-current': isWishlisted }"
           aria-hidden="true"
         />
       </UiButton>

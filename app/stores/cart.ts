@@ -1,6 +1,7 @@
 import type { CartItem, CartSummary, Product, ProductSize } from '@/types'
 
 const DEFAULT_CART_CURRENCY = 'USD'
+const CART_STORAGE_KEY = 'looma:cart'
 
 function createCartItemId(productId: Product['id'], sizeId: ProductSize['id']) {
   return `${productId}:${sizeId}`
@@ -8,6 +9,13 @@ function createCartItemId(productId: Product['id'], sizeId: ProductSize['id']) {
 
 export const useCartStore = defineStore('cart', () => {
   const items = ref<CartItem[]>([])
+
+  if (import.meta.client) {
+    onNuxtReady(() => {
+      hydrateItems()
+      watch(items, persistItems, { deep: true })
+    })
+  }
 
   const itemCount = computed(() => items.value.reduce((total, item) => total + item.quantity, 0))
   const subtotal = computed(() => items.value.reduce((total, item) => {
@@ -69,6 +77,28 @@ export const useCartStore = defineStore('cart', () => {
 
   function clearCart() {
     items.value = []
+  }
+
+  function hydrateItems() {
+    try {
+      const storedItems = localStorage.getItem(CART_STORAGE_KEY)
+
+      if (!storedItems) {
+        return
+      }
+
+      const parsedItems: unknown = JSON.parse(storedItems)
+
+      if (Array.isArray(parsedItems)) {
+        items.value = parsedItems as CartItem[]
+      }
+    } catch {
+      localStorage.removeItem(CART_STORAGE_KEY)
+    }
+  }
+
+  function persistItems() {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items.value))
   }
 
   return {

@@ -4,6 +4,7 @@ import type { Product, ProductSize } from '@/types'
 const route = useRoute()
 const catalogStore = useCatalogStore()
 const cartStore = useCartStore()
+const wishlistStore = useWishlistStore()
 const selectedSize = ref<ProductSize | null>(null)
 const addedToCart = ref(false)
 let feedbackTimeout: ReturnType<typeof setTimeout> | undefined
@@ -73,6 +74,18 @@ const selectedSizeLabel = computed(() => {
 })
 
 const canAddToCart = computed(() => selectedSize.value?.available === true)
+const isWishlisted = computed(() => {
+  return product.value ? wishlistStore.isWishlisted(product.value.id) : false
+})
+const wishlistLabel = computed(() => {
+  const currentProduct = product.value
+
+  if (!currentProduct) {
+    return 'Save product to wishlist'
+  }
+
+  return isWishlisted.value ? `Remove ${currentProduct.name} from wishlist` : `Save ${currentProduct.name} to wishlist`
+})
 
 const metadata = computed(() => {
   const currentProduct = product.value
@@ -138,6 +151,14 @@ function addToCart() {
   feedbackTimeout = setTimeout(() => {
     addedToCart.value = false
   }, 2200)
+}
+
+function toggleWishlist() {
+  if (!product.value) {
+    return
+  }
+
+  wishlistStore.toggleItem(product.value)
 }
 </script>
 
@@ -321,12 +342,16 @@ function addToCart() {
             type="button"
             variant="outline"
             size="icon-lg"
-            class="bg-card"
-            :aria-label="`Save ${product.name} to wishlist`"
+            class="bg-card hover:bg-card hover:text-foreground"
+            :class="isWishlisted ? 'border-primary text-primary' : 'text-muted-foreground'"
+            :aria-label="wishlistLabel"
+            :aria-pressed="isWishlisted"
+            @click="toggleWishlist"
           >
             <Icon
               name="lucide:heart"
               class="h-4 w-4"
+              :class="{ 'fill-current': isWishlisted }"
               aria-hidden="true"
             />
           </UiButton>
