@@ -1,3 +1,4 @@
+// Curated showcase seed data: temporary source before real DB persistence, with fictional controlled products for UI showcase quality.
 import type { Product } from '~/types'
 
 export const mockProducts: Product[] = [{
