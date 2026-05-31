@@ -39,6 +39,7 @@ export default defineNuxtConfig({
       include: [
         'clsx',
         'reka-ui',
+        '@lucide/vue',
         '@vueuse/core',
         'tailwind-merge',
         'class-variance-authority'

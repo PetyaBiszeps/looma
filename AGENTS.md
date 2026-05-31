@@ -19,6 +19,9 @@
 
 ## Working Rules
 - Keep tasks small, focused, and token-efficient.
+- Use shadcn-vue primitives for visible base UI controls.
+- Use UiSelect for value selection, UiDropdownMenu for action menus.
+- Avoid native select/button/input in app UI unless intentionally needed.
 - Prefer shadcn-vue components and Tailwind tokens for UI work.
 - Do not modify `design.pen`; it is local design exploration only.
 - Do not add dependencies without explaining why.

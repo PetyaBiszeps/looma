@@ -4,6 +4,8 @@ import type { ProductCategory, ProductSortKey } from '@/types'
 const productCategories: ProductCategory[] = ['sneakers', 'streetwear', 'accessories']
 const productSortKeys: ProductSortKey[] = ['featured', 'newest', 'price-asc', 'price-desc', 'brand']
 const catalogQueryKeys = ['search', 'category', 'brand', 'sale', 'sort']
+const allCategoriesValue = '__all-categories__'
+const allBrandsValue = '__all-brands__'
 
 const route = useRoute()
 const router = useRouter()
@@ -124,20 +126,16 @@ function onSearchInput(event: Event) {
   catalogStore.setSearchQuery((event.target as HTMLInputElement).value)
 }
 
-function onCategoryChange(event: Event) {
-  const value = (event.target as HTMLSelectElement).value
-
-  catalogStore.setSelectedCategory(value ? value as ProductCategory : null)
+function onCategoryChange(value: string) {
+  catalogStore.setSelectedCategory(value === allCategoriesValue ? null : value as ProductCategory)
 }
 
-function onBrandChange(event: Event) {
-  const value = (event.target as HTMLSelectElement).value
-
-  catalogStore.setSelectedBrand(value || null)
+function onBrandChange(value: string) {
+  catalogStore.setSelectedBrand(value === allBrandsValue ? null : value)
 }
 
-function onSortChange(event: Event) {
-  catalogStore.setSortKey((event.target as HTMLSelectElement).value as ProductSortKey)
+function onSortChange(value: string) {
+  catalogStore.setSortKey(value as ProductSortKey)
 }
 </script>
 
@@ -180,41 +178,53 @@ function onSortChange(event: Event) {
         </label>
 
         <div class="flex flex-wrap items-center gap-2.5">
-          <select
-            aria-label="Filter by category"
-            class="h-9 rounded-md border border-border bg-card px-3 text-sm font-medium text-foreground shadow-xs outline-none transition-colors hover:border-foreground/30 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
-            :value="catalogStore.selectedCategory ?? ''"
-            @change="onCategoryChange"
+          <UiSelect
+            :model-value="catalogStore.selectedCategory ?? allCategoriesValue"
+            @update:model-value="onCategoryChange"
           >
-            <option value="">
-              All categories
-            </option>
-            <option
-              v-for="category in catalogStore.categories"
-              :key="category"
-              :value="category"
+            <UiSelectTrigger
+              aria-label="Filter by category"
+              class="bg-card"
             >
-              {{ formatCategory(category) }}
-            </option>
-          </select>
+              <UiSelectValue />
+            </UiSelectTrigger>
+            <UiSelectContent>
+              <UiSelectItem :value="allCategoriesValue">
+                All categories
+              </UiSelectItem>
+              <UiSelectItem
+                v-for="category in catalogStore.categories"
+                :key="category"
+                :value="category"
+              >
+                {{ formatCategory(category) }}
+              </UiSelectItem>
+            </UiSelectContent>
+          </UiSelect>
 
-          <select
-            aria-label="Filter by brand"
-            class="h-9 rounded-md border border-border bg-card px-3 text-sm font-medium text-foreground shadow-xs outline-none transition-colors hover:border-foreground/30 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
-            :value="catalogStore.selectedBrand ?? ''"
-            @change="onBrandChange"
+          <UiSelect
+            :model-value="catalogStore.selectedBrand ?? allBrandsValue"
+            @update:model-value="onBrandChange"
           >
-            <option value="">
-              All brands
-            </option>
-            <option
-              v-for="brand in catalogStore.brands"
-              :key="brand"
-              :value="brand"
+            <UiSelectTrigger
+              aria-label="Filter by brand"
+              class="bg-card"
             >
-              {{ brand }}
-            </option>
-          </select>
+              <UiSelectValue />
+            </UiSelectTrigger>
+            <UiSelectContent>
+              <UiSelectItem :value="allBrandsValue">
+                All brands
+              </UiSelectItem>
+              <UiSelectItem
+                v-for="brand in catalogStore.brands"
+                :key="brand"
+                :value="brand"
+              >
+                {{ brand }}
+              </UiSelectItem>
+            </UiSelectContent>
+          </UiSelect>
 
           <UiButton
             type="button"
@@ -225,20 +235,26 @@ function onSortChange(event: Event) {
             Sale only
           </UiButton>
 
-          <select
-            aria-label="Sort products"
-            class="h-9 rounded-md border border-border bg-card px-3 text-sm font-medium text-foreground shadow-xs outline-none transition-colors hover:border-foreground/30 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
-            :value="catalogStore.sortKey"
-            @change="onSortChange"
+          <UiSelect
+            :model-value="catalogStore.sortKey"
+            @update:model-value="onSortChange"
           >
-            <option
-              v-for="option in sortOptions"
-              :key="option.value"
-              :value="option.value"
+            <UiSelectTrigger
+              aria-label="Sort products"
+              class="bg-card"
             >
-              Sort: {{ option.label }}
-            </option>
-          </select>
+              <UiSelectValue />
+            </UiSelectTrigger>
+            <UiSelectContent>
+              <UiSelectItem
+                v-for="option in sortOptions"
+                :key="option.value"
+                :value="option.value"
+              >
+                Sort: {{ option.label }}
+              </UiSelectItem>
+            </UiSelectContent>
+          </UiSelect>
 
           <UiButton
             v-if="catalogStore.hasActiveFilters"
