@@ -1,3 +1,15 @@
+<script setup lang="ts">
+const cartStore = useCartStore()
+
+const cartLabel = computed(() => {
+  if (cartStore.itemCount === 0) {
+    return 'Cart'
+  }
+
+  return `Cart, ${cartStore.itemCount} ${cartStore.itemCount === 1 ? 'item' : 'items'}`
+})
+</script>
+
 <template>
   <header class="border-b border-border bg-background text-foreground">
     <div class="mx-auto flex min-h-20 w-full max-w-screen-2xl flex-wrap items-center justify-between gap-4 px-6 py-4 lg:min-h-22 lg:px-8 xl:px-12">
@@ -67,17 +79,24 @@
           as-child
           variant="outline"
           size="icon-lg"
-          class="h-10 w-10 bg-card text-muted-foreground hover:bg-card hover:text-foreground"
+          class="relative h-10 w-10 bg-card text-muted-foreground hover:bg-card hover:text-foreground"
         >
           <NuxtLink
             to="/cart"
-            aria-label="Cart"
+            :aria-label="cartLabel"
           >
             <Icon
               name="lucide:shopping-bag"
               class="h-4 w-4"
               aria-hidden="true"
             />
+            <span
+              v-if="cartStore.itemCount > 0"
+              class="absolute -right-1 -top-1 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[11px] font-bold leading-none text-primary-foreground shadow-xs tabular-nums"
+              aria-hidden="true"
+            >
+              {{ cartStore.itemCount }}
+            </span>
           </NuxtLink>
         </UiButton>
 

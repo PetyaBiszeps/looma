@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import type { Product } from '@/types'
+import type { Product, ProductSize } from '@/types'
 
 const route = useRoute()
 const catalogStore = useCatalogStore()
+const cartStore = useCartStore()
+const selectedSize = ref<ProductSize | null>(null)
+const addedToCart = ref(false)
+let feedbackTimeout: ReturnType<typeof setTimeout> | undefined
 
 const slug = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
 
@@ -65,8 +69,10 @@ const salePercent = computed(() => {
 })
 
 const selectedSizeLabel = computed(() => {
-  return product.value?.sizes.find(size => size.available)?.label ?? 'Select size'
+  return selectedSize.value?.label ?? 'Select size'
 })
+
+const canAddToCart = computed(() => selectedSize.value?.available === true)
 
 const metadata = computed(() => {
   const currentProduct = product.value
@@ -88,6 +94,12 @@ useSeoMeta({
   description: () => product.value?.description
 })
 
+onBeforeUnmount(() => {
+  if (feedbackTimeout) {
+    clearTimeout(feedbackTimeout)
+  }
+})
+
 function formatPrice(amount: number, currency: string) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -98,6 +110,34 @@ function formatPrice(amount: number, currency: string) {
 
 function formatCategory(category: Product['category']) {
   return category.charAt(0).toUpperCase() + category.slice(1)
+}
+
+function selectSize(size: ProductSize) {
+  if (!size.available) {
+    return
+  }
+
+  selectedSize.value = size
+  addedToCart.value = false
+}
+
+function addToCart() {
+  const currentProduct = product.value
+
+  if (!currentProduct || !selectedSize.value?.available) {
+    return
+  }
+
+  cartStore.addItem(currentProduct, selectedSize.value)
+  addedToCart.value = true
+
+  if (feedbackTimeout) {
+    clearTimeout(feedbackTimeout)
+  }
+
+  feedbackTimeout = setTimeout(() => {
+    addedToCart.value = false
+  }, 2200)
 }
 </script>
 
@@ -235,9 +275,11 @@ function formatCategory(category: Product['category']) {
                 v-for="size in product.sizes"
                 :key="size.id"
                 type="button"
-                :variant="size.label === selectedSizeLabel ? 'default' : 'outline'"
-                :class="{ 'opacity-40': !size.available }"
+                :variant="selectedSize?.id === size.id ? 'default' : 'outline'"
+                :class="{ 'opacity-40 line-through': !size.available }"
                 :disabled="!size.available"
+                :aria-pressed="selectedSize?.id === size.id"
+                @click="selectSize(size)"
               >
                 {{ size.label }}
               </UiButton>
@@ -264,6 +306,8 @@ function formatCategory(category: Product['category']) {
           <UiButton
             type="button"
             class="flex-1"
+            :disabled="!canAddToCart"
+            @click="addToCart"
           >
             <Icon
               name="lucide:shopping-bag"
@@ -287,6 +331,13 @@ function formatCategory(category: Product['category']) {
             />
           </UiButton>
         </div>
+
+        <p
+          v-if="addedToCart"
+          class="px-6 pb-6 text-sm font-medium text-primary"
+        >
+          Added to cart
+        </p>
       </UiCard>
     </div>
   </section>
