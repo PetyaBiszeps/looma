@@ -16,7 +16,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: 'TEMPLATE',
+      title: 'Looma',
       link: [{
         rel: 'icon', type: 'image/png', href: '/favicon.ico'
       }]
