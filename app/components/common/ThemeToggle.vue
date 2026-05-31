@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import { Button } from '~/components/ui/button'
+
 const { toggleTheme } = useTheme()
 </script>
 
 <template>
-  <button
+  <Button
     type="button"
-    class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/10 focus-visible:outline-none"
+    variant="outline"
+    size="icon-lg"
+    class="h-10 w-10 bg-card text-muted-foreground hover:bg-card hover:text-foreground"
     aria-label="Toggle color mode"
     @click="toggleTheme"
   >
@@ -19,5 +23,5 @@ const { toggleTheme } = useTheme()
       class="h-4 w-4 dark:hidden"
       aria-hidden="true"
     />
-  </button>
+  </Button>
 </template>

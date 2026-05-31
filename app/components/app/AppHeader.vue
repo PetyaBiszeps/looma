@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import ThemeToggle from '~/components/common/ThemeToggle.vue'
+import { Button } from '~/components/ui/button'
+import { Input } from '~/components/ui/input'
 </script>
 
 <template>
@@ -39,37 +41,49 @@ import ThemeToggle from '~/components/common/ThemeToggle.vue'
             class="pointer-events-none absolute left-3 h-4 w-4 text-muted-foreground"
             aria-hidden="true"
           />
-          <input
+          <Input
             type="search"
             placeholder="Search sneakers, apparel"
             autocomplete="off"
-            class="h-10 w-full rounded-md border border-border bg-card pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors hover:border-foreground/30 focus-visible:border-foreground focus-visible:ring-2 focus-visible:ring-foreground/10"
-          >
+            class="h-10 bg-card pl-9 pr-3 text-sm text-foreground hover:border-foreground/30 focus-visible:border-foreground focus-visible:ring-foreground/10"
+          />
         </label>
 
-        <NuxtLink
-          to="/wishlist"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/10 focus-visible:outline-none"
-          aria-label="Wishlist"
+        <Button
+          as-child
+          variant="outline"
+          size="icon-lg"
+          class="h-10 w-10 bg-card text-muted-foreground hover:bg-card hover:text-foreground"
         >
-          <Icon
-            name="lucide:heart"
-            class="h-4 w-4"
-            aria-hidden="true"
-          />
-        </NuxtLink>
+          <NuxtLink
+            to="/wishlist"
+            aria-label="Wishlist"
+          >
+            <Icon
+              name="lucide:heart"
+              class="h-4 w-4"
+              aria-hidden="true"
+            />
+          </NuxtLink>
+        </Button>
 
-        <NuxtLink
-          to="/cart"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/10 focus-visible:outline-none"
-          aria-label="Cart"
+        <Button
+          as-child
+          variant="outline"
+          size="icon-lg"
+          class="h-10 w-10 bg-card text-muted-foreground hover:bg-card hover:text-foreground"
         >
-          <Icon
-            name="lucide:shopping-bag"
-            class="h-4 w-4"
-            aria-hidden="true"
-          />
-        </NuxtLink>
+          <NuxtLink
+            to="/cart"
+            aria-label="Cart"
+          >
+            <Icon
+              name="lucide:shopping-bag"
+              class="h-4 w-4"
+              aria-hidden="true"
+            />
+          </NuxtLink>
+        </Button>
 
         <ThemeToggle />
       </div>
