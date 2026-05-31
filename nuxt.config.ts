@@ -34,7 +34,16 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2025-07-15',
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: [
+        'clsx',
+        'reka-ui',
+        '@vueuse/core',
+        'tailwind-merge',
+        'class-variance-authority'
+      ]
+    }
   },
   eslint: {
     config: {
