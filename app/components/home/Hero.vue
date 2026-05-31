@@ -3,15 +3,15 @@ import heroStillLife from '@/assets/images/FWIlU.png'
 </script>
 
 <template>
-  <section class="mx-auto w-full max-w-360 px-4 py-8 sm:px-6 sm:py-12 lg:px-16 lg:py-14">
-    <div class="grid overflow-hidden rounded-lg bg-[#11110f] text-[#fdfcf9] md:min-h-130 md:grid-cols-[minmax(0,500px)_1fr] md:gap-8 md:p-12">
-      <div class="flex flex-col justify-center gap-6 px-6 py-10 sm:px-8 md:px-0 md:py-0">
+  <section class="mx-auto w-full max-w-screen-2xl px-6 py-8 sm:py-12 lg:px-8 lg:py-14 xl:px-12">
+    <div class="grid overflow-hidden rounded-lg bg-[#11110f] text-[#fdfcf9] md:min-h-[clamp(32.5rem,42vw,44rem)] md:grid-cols-[minmax(28rem,0.85fr)_minmax(0,1fr)] md:gap-8 md:p-[clamp(3rem,4vw,5rem)]">
+      <div class="flex max-w-xl flex-col justify-center gap-6 px-6 py-10 sm:px-8 md:px-0 md:py-0">
         <div class="space-y-5">
           <p class="text-xs font-bold tracking-[0.18em] text-accent uppercase">
             Curated sneakers &amp; streetwear
           </p>
 
-          <h1 class="max-w-3xl text-5xl font-bold tracking-tight text-balance sm:text-6xl lg:text-7xl lg:leading-[0.95]">
+          <h1 class="text-5xl font-bold leading-[0.95] tracking-tight text-balance sm:text-6xl lg:text-[clamp(4.25rem,5vw,6rem)]">
             The clean edit of future classics.
           </h1>
 
