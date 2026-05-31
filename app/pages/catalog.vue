@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { AcceptableValue } from 'reka-ui'
 import type { ProductCategory, ProductSortKey } from '@/types'
 
 const productCategories: ProductCategory[] = ['sneakers', 'streetwear', 'accessories']
@@ -126,16 +127,28 @@ function onSearchInput(event: Event) {
   catalogStore.setSearchQuery((event.target as HTMLInputElement).value)
 }
 
-function onCategoryChange(value: string) {
-  catalogStore.setSelectedCategory(value === allCategoriesValue ? null : value as ProductCategory)
+function getSelectStringValue(value: AcceptableValue) {
+  return typeof value === 'string' ? value : ''
 }
 
-function onBrandChange(value: string) {
-  catalogStore.setSelectedBrand(value === allBrandsValue ? null : value)
+function onCategoryChange(value: AcceptableValue) {
+  const selectedValue = getSelectStringValue(value)
+
+  catalogStore.setSelectedCategory(isProductCategory(selectedValue) ? selectedValue : null)
 }
 
-function onSortChange(value: string) {
-  catalogStore.setSortKey(value as ProductSortKey)
+function onBrandChange(value: AcceptableValue) {
+  const selectedValue = getSelectStringValue(value)
+
+  catalogStore.setSelectedBrand(selectedValue && selectedValue !== allBrandsValue ? selectedValue : null)
+}
+
+function onSortChange(value: AcceptableValue) {
+  const selectedValue = getSelectStringValue(value)
+
+  if (isProductSortKey(selectedValue)) {
+    catalogStore.setSortKey(selectedValue)
+  }
 }
 </script>
 
