@@ -67,7 +67,7 @@ export default defineNuxtConfig({
     }]
   },
   shadcn: {
-    // prefix: 'Ui',
+    prefix: 'Ui'
     // componentDir: '@/components/ui'
   }
 })

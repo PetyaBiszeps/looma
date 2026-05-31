@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import ThemeToggle from '~/components/common/ThemeToggle.vue'
-import { Button } from '~/components/ui/button'
-import { Input } from '~/components/ui/input'
-</script>
-
 <template>
   <header class="border-b border-border bg-background text-foreground">
     <div class="mx-auto flex min-h-20 w-full max-w-360 flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:min-h-22 lg:px-16">
@@ -41,15 +35,15 @@ import { Input } from '~/components/ui/input'
             class="pointer-events-none absolute left-3 h-4 w-4 text-muted-foreground"
             aria-hidden="true"
           />
-          <Input
+          <UiInput
             type="search"
+            aria-label="Search products"
             placeholder="Search sneakers, apparel"
-            autocomplete="off"
             class="h-10 bg-card pl-9 pr-3 text-sm text-foreground hover:border-foreground/30 focus-visible:border-foreground focus-visible:ring-foreground/10"
           />
         </label>
 
-        <Button
+        <UiButton
           as-child
           variant="outline"
           size="icon-lg"
@@ -65,9 +59,9 @@ import { Input } from '~/components/ui/input'
               aria-hidden="true"
             />
           </NuxtLink>
-        </Button>
+        </UiButton>
 
-        <Button
+        <UiButton
           as-child
           variant="outline"
           size="icon-lg"
@@ -83,7 +77,7 @@ import { Input } from '~/components/ui/input'
               aria-hidden="true"
             />
           </NuxtLink>
-        </Button>
+        </UiButton>
 
         <ThemeToggle />
       </div>

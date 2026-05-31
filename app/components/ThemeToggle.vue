@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { Button } from '~/components/ui/button'
-
 const { toggleTheme } = useTheme()
 </script>
 
 <template>
-  <Button
+  <UiButton
     type="button"
     variant="outline"
     size="icon-lg"
@@ -23,5 +21,5 @@ const { toggleTheme } = useTheme()
       class="h-4 w-4 dark:hidden"
       aria-hidden="true"
     />
-  </Button>
+  </UiButton>
 </template>

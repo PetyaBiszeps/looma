@@ -13,7 +13,7 @@
 - Package manager: pnpm.
 
 ## Architecture
-- Target data flow: External API -> Nuxt server -> normalization -> DB -> frontend.
+- Target data flow: External API → Nuxt server → normalization → DB → frontend.
 - Frontend code should consume normalized app data instead of external API response shapes.
 - Do not introduce backend services outside Nuxt server unless explicitly requested.
 
