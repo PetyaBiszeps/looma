@@ -36,6 +36,8 @@
             aria-hidden="true"
           />
           <UiInput
+            id="site-search"
+            name="search"
             type="search"
             aria-label="Search products"
             placeholder="Search sneakers, apparel"
