@@ -1,6 +1,14 @@
+# Defaults
+packages:
+  - '.'
+
+# Allowed dependency scripts
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
   sharp: true
   unrs-resolver: true
   vue-demi: true
+
+# Pnpm-specific rules
+minimumReleaseAge: 10080
