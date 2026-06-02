@@ -3,6 +3,7 @@ import withNuxt from './.nuxt/eslint.config.mjs'
 
 export default withNuxt([{
   rules: {
+    '@stylistic/indent': ['error', 2],
     '@stylistic/eol-last': ['error', 'always'],
     '@stylistic/comma-dangle': ['error', 'never'],
     '@stylistic/brace-style': ['error', '1tbs', {
