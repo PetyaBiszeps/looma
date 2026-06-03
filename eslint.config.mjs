@@ -3,13 +3,49 @@ import withNuxt from './.nuxt/eslint.config.mjs'
 
 export default withNuxt([{
   rules: {
+    'no-console': 'warn',
+    'no-unreachable': 'error',
+    'curly': ['error', 'all'],
+    'no-implicit-coercion': 'error',
+    'no-useless-assignment': 'error',
+    'preserve-caught-error': 'error',
+    'eqeqeq': ['error', 'always', {
+      null: 'ignore'
+    }],
+
     '@stylistic/indent': ['error', 2],
+    '@stylistic/semi': ['error', 'never'],
+    '@stylistic/quotes': ['error', 'single'],
     '@stylistic/eol-last': ['error', 'always'],
     '@stylistic/comma-dangle': ['error', 'never'],
+    '@stylistic/object-curly-spacing': ['error', 'always'],
+    '@stylistic/quote-props': ['error', 'consistent-as-needed'],
     '@stylistic/brace-style': ['error', '1tbs', {
       allowSingleLine: true
     }],
+    '@stylistic/key-spacing': ['error', {
+      beforeColon: false,
+      afterColon: true
+    }],
+    '@stylistic/comma-spacing': ['error', {
+      before: false,
+      after: true
+    }],
+    '@stylistic/arrow-spacing': ['error', {
+      before: true,
+      after: true
+    }],
+    '@stylistic/space-before-function-paren': ['error', {
+      named: 'never',
+      anonymous: 'always',
+      asyncArrow: 'always'
+    }],
 
+    'vue/no-v-html': 'warn',
+    'vue/no-empty-component-block': 'error',
+    'vue/multi-word-component-names': 'off',
+    'vue/component-api-style': ['error', ['script-setup']],
+    'vue/padding-line-between-blocks': ['error', 'always'],
     'vue/attributes-order': ['error', {
       order: [
         'CONDITIONALS', // v-if, v-else
@@ -24,6 +60,26 @@ export default withNuxt([{
         'OTHER_ATTR', // :name, :type, :placeholder, :disabled, :readonly, :autocomplete, :model-value, :class, :style
         'EVENTS' // @click, @focus
       ]
+    }],
+    'vue/block-lang': ['error', {
+      script: {
+        lang: 'ts'
+      },
+      style: {
+        lang: 'scss'
+      }
+    }],
+    'vue/block-order': ['error', {
+      order: ['script', 'template', 'style']
+    }],
+    'vue/define-macros-order': ['error', {
+      order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots']
+    }],
+
+    '@typescript-eslint/no-unused-vars': ['warn', {
+      argsIgnorePattern: '^_',
+      varsIgnorePattern: '^_',
+      caughtErrorsIgnorePattern: '^_'
     }]
   }
 }])
