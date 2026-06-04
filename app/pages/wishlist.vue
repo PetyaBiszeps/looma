@@ -50,6 +50,7 @@ function createWishlistProduct(item: WishlistItem): Product {
     <CatalogGrid
       v-if="!wishlistStore.isEmpty"
       :products="wishlistProducts"
+      card-wishlist-action="remove"
     />
 
     <UiCard

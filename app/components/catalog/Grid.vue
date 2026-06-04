@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { Product } from '@/types'
 
-defineProps<{
+withDefaults(defineProps<{
   products: Product[]
-}>()
+  cardWishlistAction?: 'save' | 'remove'
+}>(), {
+  cardWishlistAction: 'save'
+})
 </script>
 
 <template>
@@ -17,7 +20,10 @@ defineProps<{
         :key="product.id"
         class="min-w-0"
       >
-        <ProductCard :product="product" />
+        <ProductCard
+          :product="product"
+          :wishlist-action="cardWishlistAction"
+        />
       </li>
     </ul>
 

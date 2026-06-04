@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { Product } from '@/types'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   product: Product
-}>()
+  wishlistAction?: 'save' | 'remove'
+}>(), {
+  wishlistAction: 'save'
+})
 
 const wishlistStore = useWishlistStore()
 
@@ -20,7 +23,12 @@ const hasOriginalPrice = computed(() => {
 const isOnSale = computed(() => props.product.saleState === 'sale' || hasOriginalPrice.value)
 const isSoldOut = computed(() => props.product.saleState === 'sold-out')
 const isWishlisted = computed(() => wishlistStore.isWishlisted(props.product.id))
+const wishlistIcon = computed(() => props.wishlistAction === 'remove' ? 'lucide:x' : 'lucide:heart')
 const wishlistLabel = computed(() => {
+  if (props.wishlistAction === 'remove') {
+    return `Remove ${props.product.name} from wishlist`
+  }
+
   return isWishlisted.value ? `Remove ${props.product.name} from wishlist` : `Save ${props.product.name} to wishlist`
 })
 
@@ -94,9 +102,9 @@ function formatPrice(amount: number) {
         @click.stop="wishlistStore.toggleItem(product)"
       >
         <Icon
-          name="lucide:heart"
+          :name="wishlistIcon"
           class="h-4 w-4"
-          :class="{ 'fill-destructive': isWishlisted }"
+          :class="{ 'fill-destructive': wishlistAction === 'save' && isWishlisted }"
           aria-hidden="true"
         />
       </UiButton>
