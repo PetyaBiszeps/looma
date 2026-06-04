@@ -182,7 +182,12 @@ function toggleWishlist() {
         class="h-3.5 w-3.5"
         aria-hidden="true"
       />
-      <span>{{ formatCategory(product.category) }}</span>
+      <NuxtLink
+        :to="{ path: '/catalog', query: { category: product.category } }"
+        class="transition-colors hover:text-foreground"
+      >
+        {{ formatCategory(product.category) }}
+      </NuxtLink>
       <Icon
         name="lucide:chevron-right"
         class="h-3.5 w-3.5"
