@@ -38,7 +38,7 @@ import heroStillLife from '@/assets/images/FWIlU.png'
           <UiButton
             as-child
             variant="outline"
-            class="border-[#e5e0d6]/25 bg-[#fdfcf9] text-[#11110f] shadow-xs hover:bg-[#eee9df] hover:text-[#11110f]"
+            class="border-[#e5e0d6]/30 bg-transparent text-[#fdfcf9] shadow-xs hover:bg-[#fdfcf9]/10 hover:text-[#fdfcf9]"
           >
             <NuxtLink to="/catalog?edit=drop-01">
               Read edit
