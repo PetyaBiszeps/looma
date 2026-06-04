@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@lucide/vue": "^1.16.0",
-    "@nuxt/eslint": "1.15.2",
     "@nuxt/fonts": "0.14.0",
     "@nuxt/icon": "2.2.2",
     "@nuxt/image": "2.0.0",
@@ -26,13 +25,14 @@
     "nuxt": "^4.4.6",
     "reka-ui": "^2.9.8",
     "shadcn-nuxt": "2.7.3",
-    "tailwind-merge": "^3.6.0",
-    "tailwindcss": "^4.3.0"
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.109",
+    "@nuxt/eslint": "^1.15.2",
     "@tailwindcss/vite": "^4.3.0",
     "eslint": "^10.4.0",
+    "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3"
   },
   "packageManager": "pnpm@11.5.0+sha512.dbfcc4f81cf48597afd4bc391ffdf12c11f1a9fb83a395bfa6b0a2d9cc2fd8ffebafdb1ccbd529632153f793904c2615b7f09fe1a345473fd1c35845172a8eb1"
